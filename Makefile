@@ -1,8 +1,6 @@
 # ----------------------------------
 #          INSTALL & TEST
 # ----------------------------------
-install_requirements:
-	@pip install -r requirements.txt
 
 check_code:
 	@flake8 scripts/* Globalizer-frontend/*.py
@@ -17,16 +15,7 @@ test:
 ftest:
 	@Write me
 
-clean:
-	@rm -f */version.txt
-	@rm -f .coverage
-	@rm -fr */__pycache__ */*.pyc __pycache__
-	@rm -fr build dist
-	@rm -fr Globalizer-frontend-*.dist-info
-	@rm -fr Globalizer-frontend.egg-info
 
-install:
-	@pip install . -U
 
 all: clean install test black check_code
 
@@ -53,3 +42,31 @@ pypi_test:
 
 pypi:
 	@twine upload dist/* -u $(PYPI_USERNAME)
+
+streamlit:
+	-@streamlit run app.py
+
+heroku_login:
+	-@heroku login
+
+heroku_create_app:
+	-@heroku create ${APP_NAME}
+
+deploy_heroku:
+	-@git push heroku master
+	-@heroku ps:scale web=1
+
+install_requirements:
+	@pip install -r requirements.txt
+
+install:
+	@pip install . -U
+
+clean:
+	@rm -fr */__pycache__
+	@rm -fr __init__.py
+	@rm -fr build
+	@rm -fr dist
+	@rm -fr *.dist-info
+	@rm -fr *.egg-info
+	-@rm model.joblib
