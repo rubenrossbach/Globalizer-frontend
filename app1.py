@@ -2,7 +2,7 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-from countries import countries
+from countries import countries, trans
 import requests
 import folium
 from streamlit_folium import folium_static
@@ -15,7 +15,7 @@ def app():
 #Basic Layout stuff
     #st.set_page_config(layout='wide')
 
-    col1, col2 = st.columns(2)
+    col1, col2, col3 = st.columns(3)
 
 #Get dropdown list for countries
     def get_country():
@@ -24,28 +24,33 @@ def app():
     country = get_country()
 
     with col1:
-        st.multiselect('Select countries', country)
+        country_list = st.multiselect('Select countries', country)
 
 #Select number of clusters
     with col2:
-        st.number_input('Select a number of clusters', 1, 10000)
+        centers = st.number_input('Select a number of clusters', 1, 10000)
+
+#mean distance
+    with col3:
+        threshold = st.slider('Select mean distance to coustomer',10, 500)
 
 #select percentage of people to reach
-    st.slider('Percenage of people to reach',0, 100)
+    #st.slider('Percentage of people to reach',0, 100)
+
+    # transform country codes
+    country_code_list = [trans[c] for c in country_list]
+    country_code_string = ",".join(country_code_list)
 
 
-
-#data for coordinates
-    coordinate = [[51.14365216, 12.90129043],
-       [49.9082329 ,  8.32919233],
-       [48.51070336,  9.05212022],
-       [49.95573197, 10.91326732],
-       [53.75704471, 10.06461158],
-       [51.17749919,  6.9799287 ],
-       [51.94432852, 10.19479602],
-       [52.47122199,  8.2674454 ],
-       [52.72249955, 13.29947277],
-       [48.34339277, 11.74843626]]
+#get coordinates
+    base_url = 'http://127.0.0.1:8000/predict'
+    params = {
+        'country': country_code_string,
+        'threshold': threshold,
+        'n_centers': centers
+    }
+    response1 = requests.get(base_url, params = params).json()
+    coordinate = response1['centers']
 
 #Get Dataframe
     url = 'https://nominatim.openstreetmap.org/reverse'
@@ -60,10 +65,11 @@ def app():
             'format': 'json'
          }
         response = requests.get(url, params = params).json()
-        responses.append(response['address'])
-    df = pd.DataFrame(responses)
-    df = df[['road', 'village', 'town', 'county', 'state', 'postcode', 'country']]
-    df = df.replace(np.nan, "Not Available")
+        responses.append(response['display_name'])
+    df = pd.DataFrame({
+        "Address": responses,
+        "Coordinates": coordinate
+    })
 
 #center the map
     center =[sum(i[0] for i in coordinate)/len(coordinate), sum(i[1] for i in coordinate)/len(coordinate)]
@@ -77,11 +83,7 @@ def app():
 
 #display coordinates on map and style tooltip
     for i in range(len(df)):
-        folium.Marker(coordinate[i], tooltip=f"""Road: {df.loc[i,'road']},
-                                        Village: {df.loc[i,'village']},
-                                        Town: {df.loc[i,'town']},
-                                        County: {df.loc[i, 'county']}""").add_to(m)
-
+        folium.Marker(coordinate[i], tooltip=df.loc[i,'Address']).add_to(m)
 
 
 #Google Maps
@@ -166,7 +168,6 @@ def app():
 
 
 #Get Address to display on page
-
-
+    st.write("# Your Centers")
     st.dataframe(df)
     return
