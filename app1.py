@@ -3,6 +3,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 from countries import countries
+from countries import small
 import requests
 import folium
 from streamlit_folium import folium_static
@@ -15,38 +16,39 @@ def app():
 #Basic Layout stuff
     #st.set_page_config(layout='wide')
 
-    col1, col2 = st.columns(2)
+    col1, col2, col3 = st.columns(3)
 
 #Get dropdown list for countries
     def get_country():
-        return countries
+        return small
 
     country = get_country()
 
     with col1:
-        st.multiselect('Select countries', country)
+        country = st.multiselect('Select countries', country)
 
 #Select number of clusters
     with col2:
-        st.number_input('Select a number of clusters', 1, 10000)
+        centers = st.number_input('Select a number of clusters', 1, 10000)
+
+#mean distance
+    with col3:
+        threshold = st.slider('Select mean distance to coustomer',10, 500)
 
 #select percentage of people to reach
-    st.slider('Percenage of people to reach',0, 100)
+    #st.slider('Percentage of people to reach',0, 100)
 
 
 
 #data for coordinates
-    coordinate = [[51.14365216, 12.90129043],
-       [49.9082329 ,  8.32919233],
-       [48.51070336,  9.05212022],
-       [49.95573197, 10.91326732],
-       [53.75704471, 10.06461158],
-       [51.17749919,  6.9799287 ],
-       [51.94432852, 10.19479602],
-       [52.47122199,  8.2674454 ],
-       [52.72249955, 13.29947277],
-       [48.34339277, 11.74843626]]
-
+    base_url = 'http://127.0.0.1:8000/predict'
+    params = {
+        'country': small['Afghanistan'],
+        'threshold': threshold,
+        'n_centers': centers
+    }
+    response1 = requests.get(base_url, params = params).json()
+    coordinate = response1['centers']
 #Get Dataframe
     url = 'https://nominatim.openstreetmap.org/reverse'
     responses=[]
