@@ -9,6 +9,7 @@ from streamlit_folium import folium_static
 from folium import plugins
 from folium.plugins import HeatMap
 from folium.plugins import HeatMapWithTime
+from country_statistics import show_country_statistics
 
 
 def app():
@@ -21,21 +22,22 @@ def app():
         """
         Find the optimal locations for you warehouses, data centers or offices.
         Simply enter a country and let us do the magic.
+
+
         """
     )
-    #Basic Layout stuff
-
-    col1, col2 = st.columns(2)
-
 
     #Get dropdown list for countries
     def get_country():
         return countries
 
     country = get_country()
+    country_list = st.multiselect('Choose one or more countries:', country)
+    #Basic Layout stuff
 
+    st.markdown('Choose one of these options:')
+    col1, col2 = st.columns(2)
 
-    country_list = st.multiselect('Select countries', country)
 
     #Select buttons for mean distance/number of clusters
 
@@ -92,17 +94,28 @@ def app():
     country_code_string = ",".join(country_code_list)
 
     # button to run
-    col1, col2, col3 , col4, col5 = st.columns(5)
+    col1, col2, col3 , col4, col5 , col6= st.columns(6)
 
     with col1:
         pass
     with col2:
         pass
-    with col4:
+    with col3:
         pass
     with col5:
         pass
-    with col3 :
+    with col6:
+        pass
+    with col4 :
+        ## chenge color of button
+        c = st.markdown("""
+        <style>
+        div.stButton > button:first-child {
+            background-color: #f23a3a;
+            color:#ffffff;
+        }
+        </style>""", unsafe_allow_html=True)
+        ##
         run_button = False
         if (st.session_state.current == "A" or st.session_state.current == "B") \
             and country_code_list != []:
@@ -135,7 +148,8 @@ def app():
         else:
             #response1 = response1.json()
             coordinate = response1.json()["centers"]
-
+        avg_distance = response1.json()["avg_distance"]
+        st.write(f'Average distance: {round(avg_distance, 2)} km')
         #Get Dataframe
         url = 'https://nominatim.openstreetmap.org/reverse'
         responses=[]
@@ -153,7 +167,7 @@ def app():
         df = pd.DataFrame({
             "Address": responses,
             "Coordinates": coordinate
-        })
+        }, index=list(range(1, (len(coordinate)+1))))
 
         #center the map
         center =[sum(i[0] for i in coordinate)/len(coordinate), sum(i[1] for i in coordinate)/len(coordinate)]
@@ -167,7 +181,7 @@ def app():
 
         #display coordinates on map and style tooltip
         for i in range(len(df)):
-            folium.Marker(coordinate[i], tooltip=df.loc[i,'Address']).add_to(m)
+            folium.Marker(coordinate[i], tooltip=df.loc[i+1,'Address']).add_to(m)
 
 
         #Google Maps
@@ -250,10 +264,15 @@ def app():
 
         folium_static(m)
 
+        st.markdown('## Statistics about the country:')
+        st.dataframe(show_country_statistics(country_code_list[0]))
 
         #Get Address to display on page
-        st.write("# Your Centers")
+        st.write("## Your Centers:")
         st.dataframe(df)
+        csv = df.to_csv()
+        st.download_button(label = 'Download as CSV file', data = csv, file_name = 'centers.csv')
+
 
     # no button pressed
     else:

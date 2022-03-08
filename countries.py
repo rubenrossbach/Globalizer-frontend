@@ -8,7 +8,7 @@ trans = {
  'Albania': 'ALB',
  'Algeria': 'DZA',
  'American Samoa': 'ASM',
- 'Andorra': 'AND',
+ 'Andorra': 'AN',
  'Angola': 'AGO',
  'Anguilla': 'AIA',
  'Antigua and Barbuda': 'ATG',
