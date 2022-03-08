@@ -1,10 +1,11 @@
 import app1
 import app2
+import home
 import streamlit as st
 
 st.set_page_config(
     page_title="Globalizer",
-    page_icon="",
+    page_icon="chart_with_upwards_trend",
     layout="wide",
     initial_sidebar_state="collapsed")
 
@@ -19,8 +20,9 @@ st.write(f'<style>{CSS}</style>', unsafe_allow_html=True)
 
 #st.set_page_config(layout='wide')
 PAGES = {
-"Display centers on a map": app1,
-"Statistics about the country": app2
+"Home Page": home,
+"The Project": app1,
+"About the team": app2
 }
 st.sidebar.title('Globalizer')
 selection = st.sidebar.radio("Select", list(PAGES.keys()))

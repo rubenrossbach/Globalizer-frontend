@@ -1,170 +1,91 @@
 import streamlit as st
-import pandas as pd
-import numpy as np
-from countries import countries
-import requests
-import folium
-from streamlit_folium import folium_static
-from folium import plugins
-from folium.plugins import HeatMap
-from folium.plugins import HeatMapWithTime
-
+import webbrowser
 def app():
-#Basic Layout stuff
-    #st.set_page_config(layout='wide')
+    st.markdown(
+        "<h1 style='text-align: center; color: black;'>Globalizer</h1>",
+        unsafe_allow_html=True)
+    st.write('''
+    For this project, we used databases from ...
+    ''')
+    st.markdown('## The Team:')
 
-    col1, col2 = st.columns(2)
 
-#Get dropdown list for countries
-    def get_country():
-        return countries
+    ###Team members
 
-    country = get_country()
-
+    #Ruben
+    st.markdown('Ruben Rossbach:')
+    col1, col2, col3, col4, col5, col6 = st.columns(6)
     with col1:
-        st.multiselect('Select countries', country)
-
-#Select number of coustomers
+        urlrLink = 'https://www.streamlit.io/'
+        if st.button("Ruben's LinkedIn (n/a)"):
+            webbrowser.open_new_tab(urlrLink)
     with col2:
-        st.slider('Select mean distance to coustomer', )
-
-#select percentage of people to reach
-    st.slider('Percenage of people to reach',0, 100)
-
-
-
-#data for coordinates
-    coordinate = [[33.409233535058924, 63.606124498027775],
-       [35.04800243653927 ,  69.01548230141296],
-       [48.51070336,  9.05212022],
-       [49.95573197, 10.91326732],
-       [53.75704471, 10.06461158],
-       [51.17749919,  6.9799287 ],
-       [51.94432852, 10.19479602],
-       [52.47122199,  8.2674454 ],
-       [52.72249955, 13.29947277],
-       [48.34339277, 11.74843626]]
-
-#Get Dataframe
-    url = 'https://nominatim.openstreetmap.org/reverse'
-    responses=[]
-    for coordinates in coordinate:
-
-        lat = coordinates[0]
-        lon = coordinates[1]
-        params = {
-            'lat': lat,
-            'lon': lon,
-            'format': 'json'
-         }
-        response = requests.get(url, params = params).json()
-        responses.append(response['address'])
-    df = pd.DataFrame(responses)
-    df = df[['road', 'village', 'town', 'county', 'state', 'postcode', 'country']]
-    df = df.replace(np.nan, "Not Available")
-
-#center the map
-    center =[sum(i[0] for i in coordinate)/len(coordinate), sum(i[1] for i in coordinate)/len(coordinate)]
-
-
-#display map
-    m = folium.Map(location=center,
-
-                )
-
-
-#display coordinates on map and style tooltip
-    for i in range(len(df)):
-        folium.Marker(coordinate[i], tooltip=f"""Road: {df.loc[i,'road']},
-                                        Village: {df.loc[i,'village']},
-                                        Town: {df.loc[i,'town']},
-                                        County: {df.loc[i, 'county']}""").add_to(m)
-
-
-
-#Google Maps
-    basemaps = {
-    'Google Maps': folium.TileLayer(
-        tiles = 'https://mt1.google.com/vt/lyrs=h&x={x}&y={y}&z={z}',
-        attr = 'Google',
-        name = 'Google Maps',
-        overlay = True,
-        control = True
-    ),
-    'Google Satellite': folium.TileLayer(
-        tiles = 'https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',
-        attr = 'Google',
-        name = 'Google Satellite',
-        overlay = True,
-        control = True
-    ),
-    'Google Terrain': folium.TileLayer(
-        tiles = 'https://mt1.google.com/vt/lyrs=p&x={x}&y={y}&z={z}',
-        attr = 'Google',
-        name = 'Google Terrain',
-        overlay = True,
-        control = True
-    ),
-    'Google Satellite Hybrid': folium.TileLayer(
-        tiles = 'https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}',
-        attr = 'Google',
-        name = 'Google Satellite',
-        overlay = True,
-        control = True
-    ),
-    'Esri Satellite': folium.TileLayer(
-        tiles = 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
-        attr = 'Esri',
-        name = 'Esri Satellite',
-        overlay = True,
-        control = True
-    )
-}
-
-##Data for heatmap
-#df_heat = df_small.drop(['Centers'], axis=1)
-#df_heat = df_heat.to_numpy()
-#HeatMap(df_heat).add_to(m)
-
-
-# Add custom basemaps
-
-    basemaps['Google Maps'].add_to(m)
-    basemaps['Google Satellite Hybrid'].add_to(m)
-    basemaps['Esri Satellite'].add_to(m)
-    folium.LayerControl().add_to(m)
-
-
-
-
-#Plugins
-
-    plugins.Fullscreen().add_to(m)
-    plugins.LocateControl().add_to(m)
-    plugins.MeasureControl(position='topright', primary_length_unit='kilometers', secondary_length_unit='miles', primary_area_unit='sqmeters', secondary_area_unit='acres').add_to(m)
-    minimap = plugins.MiniMap()
-    m.add_child(minimap)
-
-#####
-
-
-#automatic zoom start
-
-    sw = min(coordinate)[0], min(coordinate)[1]
-    ne = max(coordinate)[0], max(coordinate)[1]
-
-    m.fit_bounds([sw, ne])
-
-
-
-
-# call to render Folium map in Streamlit
-
-    folium_static(m)
-
-
-#Get Address to display on page
-
-
-    st.dataframe(df)
+        urlrGH = 'https://github.com/rubenrossbach'
+        if st.button("Ruben's Github"):
+            webbrowser.open_new_tab(urlrGH)
+    with col3:
+        pass
+    with col4:
+        pass
+    with col5:
+        pass
+    with col6:
+        pass
+    #Arvin
+    st.markdown('Arvin Azimifard:')
+    col1, col2, col3, col4, col5, col6 = st.columns(6)
+    with col1:
+        urlaLink = 'https://www.linkedin.com/in/arvin-azimi-fard-85187717a/'
+        if st.button("Arvin's LinkedIn"):
+            webbrowser.open_new_tab(urlaLink)
+    with col2:
+        urlaGH = 'https://github.com/ArvinAzimifard'
+        if st.button("Arvin's GitHub"):
+            webbrowser.open_new_tab(urlaGH)
+    with col3:
+        pass
+    with col4:
+        pass
+    with col5:
+        pass
+    with col6:
+        pass
+    #Martin
+    st.markdown('Martin Reichardt:')
+    col1, col2, col3, col4, col5, col6 = st.columns(6)
+    with col1:
+        urlmLink = 'https://www.linkedin.com/in/martinreichardt/'
+        if st.button("Martin's LinkedIn"):
+            webbrowser.open_new_tab(urlmLink)
+    with col2:
+        urlmGH = 'https://github.com/reichardtma'
+        if st.button("Martin's GitHub"):
+            webbrowser.open_new_tab(urlmGH)
+    with col3:
+        pass
+    with col4:
+        pass
+    with col5:
+        pass
+    with col6:
+        pass
+    #Pierre
+    st.markdown('Pierre Sevenig:')
+    col1, col2, col3, col4, col5, col6 = st.columns(6)
+    with col1:
+        urlpLink = 'https://www.linkedin.com/in/pierre-sevenig-483140178/'
+        if st.button("Pierre's LinkedIn"):
+            webbrowser.open_new_tab(urlpLink)
+    with col2:
+        urlpGH = 'https://github.com/psevenig '
+        if st.button("Pierre's GitHub"):
+            webbrowser.open_new_tab(urlpGH)
+    with col3:
+        pass
+    with col4:
+        pass
+    with col5:
+        pass
+    with col6:
+        pass
     return
