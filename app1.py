@@ -14,18 +14,26 @@ from country_statistics import show_country_statistics
 
 def app():
     st.markdown(
-        "<h1 style='text-align: center; color: black;'>Globalizer</h1>",
+        """
+        <h1 style='text-align: center; color: black;'>Globalizer</h1>
+        <p style='text-align: center'>Expanding to a new country and wondering where to open your business's
+        locations?</p>
+        <p style='text-align: center'>Let us help you with our Machine Learning algorithm based on high-resolution
+        population density data.
+        It makes optimal decisions based on where a country's population is
+        actually located. <br>
+        Choose a country to get started.</p>
+        """,
         unsafe_allow_html=True)
 
-
-    st.write(
-        """
-        Find the optimal locations for you warehouses, data centers or offices.
-        Simply enter a country and let us do the magic.
-
-
-        """
-    )
+        # Possible use cases are:
+        # <ul>
+        #     <li>Warehouses</li>
+        #     <li>Data centers</li>
+        #     <li>Sales offices</li>
+        #     <li>Medical centers</li>
+        #     <li>and many more</li>
+        # </ul>
 
     #Get dropdown list for countries
     def get_country():
@@ -58,7 +66,7 @@ def app():
                 population.<br>
                 Example: The average person in the country should not have
                 to travel more than 50 km to get to their nearest center.
-                Choose a mean distance of <u>50 km</u> in this case.</li>
+                Choose <u>50 km</u> as mean distance.</li>
                 <li><strong>Radius and Population </strong><br>
                 Each of your centers has an effective area it can cover. For
                 example, you can limit the effective radius of your
@@ -68,8 +76,8 @@ def app():
                 number of centers and their optimal locations. You can choose
                 population as a percentage from 0 to 100 % of the country's total.<br>
                 Example: You want 60 % of the country's population to be within
-                50 km of your centers. Choose <u>50 km</u> radius and <u>60 %</u>
-                of the population.</li>
+                50 km of your centers. Choose <u>50 km</u> as the radius and <u>60 %</u>
+                as the share of the population.</li>
             </ul>
         </details>
         """,
