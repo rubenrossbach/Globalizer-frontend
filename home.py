@@ -1,5 +1,6 @@
 import streamlit as st
 import pydeck as pdk
+
 def app():
     st.markdown(
         "<h1 style='text-align: center; color: black;'>Globalizer</h1>",
@@ -39,4 +40,5 @@ def app():
     )
     r.to_html("test.html", open_browser=False, notebook_display=False)
     st.pydeck_chart(r)
+
     return

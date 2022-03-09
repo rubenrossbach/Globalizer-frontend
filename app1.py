@@ -1,4 +1,5 @@
 
+from re import A
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -10,22 +11,27 @@ from folium import plugins
 from folium.plugins import HeatMap
 from folium.plugins import HeatMapWithTime
 from country_statistics import show_country_statistics
-
+import hydralit_components as hc
+import time
 
 def app():
+
+    #Download animation
+    #with hc.HyLoader('', hc.Loaders.pulse_bars,):
+    #    time.sleep(1)
+
     st.markdown(
-        "<h1 style='text-align: center; color: black;'>Globalizer</h1>",
+        """
+        <h1 style='text-align: center; color: black;'><u>Globalizer</u></h1>
+        <p style='text-align: center'>Expanding to a new country and wondering where to open your business's
+        locations?</p>
+        <p style='text-align: center'>Let us help you with our Machine Learning algorithm based on high-resolution
+        population density data.
+        It makes optimal decisions based on where a country's population is
+        actually located. <br>
+        Choose a country to get started.</p>
+        """,
         unsafe_allow_html=True)
-
-
-    st.write(
-        """
-        Find the optimal locations for you warehouses, data centers or offices.
-        Simply enter a country and let us do the magic.
-
-
-        """
-    )
 
     #Get dropdown list for countries
     def get_country():
@@ -33,11 +39,6 @@ def app():
 
     country = get_country()
     country_list = st.multiselect('Choose one or more countries:', country)
-    #Basic Layout stuff
-
-    st.markdown('Choose one of these options:')
-    col1, col2 = st.columns(2)
-
 
     #Select buttons for mean distance/number of clusters
 
@@ -53,31 +54,67 @@ def app():
 
         st.session_state.BBB = False
 
-    with col1:
-        A = st.button("Select number of centers")
 
-    with col2:
-        B = st.button("Select mean distance to customer")
+    option = st.selectbox('Select one option', options = ('Select number of centers', 'Select mean distance to customer'))
+
+       # explanation
+    st.markdown(
+        """
+        <details>
+            <summary>Explanation</summary>
+            You have several options to get the optimal locations for your needs:
+            <ul>
+                <li><strong>Number of centers </strong><br>
+                You already know how many centers you want to open? Give this
+                number to our algorithm and you will receive the optimal
+                locations. This is applicable if you have a fixed budget for a
+                certain number of centers and simply want to get the best
+                locations for these.<br>
+                Example: Choose <u>10</u> if you want 10 centers.</li>
+                <li><strong>Mean distance </strong><br>
+                You don't know yet how many centers to open, but distance is
+                the deciding factor? Let us choose the optimal number of
+                centers for you based on the average distance to the country's
+                population.<br>
+                Example: The average person in the country should not have
+                to travel more than 50 km to get to their nearest center.
+                Choose <u>50 km</u> as mean distance.</li>
+                <li><strong>Radius and Population </strong><br>
+                Each of your centers has an effective area it can cover. For
+                example, you can limit the effective radius of your
+                centers to 50 km. <br>
+                Choose how many people should be inside the coverage area of
+                your centers. Our algorithm will then determine the required
+                number of centers and their optimal locations. You can choose
+                population as a percentage from 0 to 100 % of the country's total.<br>
+                Example: You want 60 % of the country's population to be within
+                50 km of your centers. Choose <u>50 km</u> as the radius and <u>60 %</u>
+                as the share of the population.</li>
+            </ul>
+        </details>
+        """,
+        unsafe_allow_html=True
+    )
+    ##empty line in streamlit
+    st.markdown('')
+    if 'Select number of centers' in option:
+
+        st.session_state.current = 'A'
 
 
-    if A:
+    if 'Select mean distance to customer' in option:
 
-        st.session_state.current = "A"
-
-
-    if B:
-
-        st.session_state.current = "B"
+        st.session_state.current = 'B'
 
     if st.session_state.current != None:
 
-        if st.session_state.current == "A":
+        if st.session_state.current == 'A':
 
             st.session_state.AAA = True
 
             st.session_state.BBB = False
 
-            centers = st.number_input('Select a number of centers', 1, 10000)
+            centers = st.selectbox('Select a number of centers', range(500))
             threshold = None
         else:
 
@@ -85,7 +122,7 @@ def app():
 
             st.session_state.AAA = False
 
-            threshold = st.slider('Select mean distance to coustomer in km',10, 500)
+            threshold = st.slider('Select mean distance to coustomer in km',10, 500, step=10)
             centers = None
 
 
@@ -232,8 +269,8 @@ def app():
         # Add custom basemaps
 
         basemaps['Google Maps'].add_to(m)
-        basemaps['Google Satellite Hybrid'].add_to(m)
-        basemaps['Google Terrain'].add_to(m)
+        #basemaps['Google Satellite Hybrid'].add_to(m)
+        #basemaps['Google Terrain'].add_to(m)
         folium.LayerControl().add_to(m)
 
 
@@ -276,32 +313,9 @@ def app():
 
     # no button pressed
     else:
-        #Setting up the world countries data URL
-        # url = 'https://raw.githubusercontent.com/python-visualization/folium/master/examples/data'
-        # country_shapes = f'{url}/world-countries.json'
-        # basemaps = {
-        #     'Google Maps': folium.TileLayer(
-        #         tiles = 'https://mt1.google.com/vt/lyrs=h&x={x}&y={y}&z={z}',
-        #         attr = 'Google',
-        #         name = 'Google Maps',
-        #         overlay = True,
-        #         control = True
-        #     )
-        # }
-        m = folium.Map() #location=[0,0], zoom_start=2.5)
-        # folium.Choropleth(
-        # #The GeoJSON data to represent the world country
-        # geo_data=country_shapes,
-        # # name='choropleth COVID-19',
-        # # data=df_covid,
-        # #The column aceppting list with 2 value; The country name and  the numerical value
-        # # columns=['Country', 'Total Case'],
-        # # key_on='feature.properties.name',
-        # fill_color='blue',
-        # # nan_fill_color='white'
-        # ).add_to(m)
+
+        m = folium.Map()
         m.fit_bounds([[-50,  -30],[70,60]])
-        # basemaps['Google Maps'].add_to(m)
         folium_static(m)
 
 
