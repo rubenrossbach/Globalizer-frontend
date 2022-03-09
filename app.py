@@ -4,9 +4,9 @@ import streamlit as st
 
 st.set_page_config(
     page_title="Globalizer",
-    page_icon="chart_with_upwards_trend",
+    page_icon="https://freesvg.org/img/1386749018.png",
     layout="wide",
-    initial_sidebar_state="collapsed")
+    initial_sidebar_state="expanded")
 
 CSS = """
 iframe {

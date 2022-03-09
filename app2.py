@@ -1,15 +1,8 @@
 import streamlit as st
 import webbrowser
-import hydralit_components as hc
-import time
 from PIL import Image
 
 def app():
-
-    ##Loading screen
-    #with hc.HyLoader('', hc.Loaders.pulse_bars,):
-    #    time.sleep(1)
-
 
     st.markdown(
         "<h1 style='text-align: center; color: black;'><u>Globalizer</u></h1>",
