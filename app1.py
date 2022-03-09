@@ -153,7 +153,7 @@ def app():
     # button to run
     col1, col2, col3 , col4, col5 , col6= st.columns(6)
 
-    with col1:
+    with col4:
         pass
     with col2:
         pass
@@ -163,7 +163,7 @@ def app():
         pass
     with col6:
         pass
-    with col4 :
+    with col1 :
         ## chenge color of button
         c = st.markdown("""
         <style>
@@ -178,7 +178,7 @@ def app():
             st.session_state.current == "B" or
             st.session_state.current == "C") \
             and country_code_list != []:
-            run_button = st.button('Run')
+            run_button = st.button('Calculate!')
 
 
     if run_button:
