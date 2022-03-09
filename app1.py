@@ -33,11 +33,48 @@ def app():
 
     country = get_country()
     country_list = st.multiselect('Choose one or more countries:', country)
-    #Basic Layout stuff
 
     st.markdown('Choose one of these options:')
     col1, col2 = st.columns(2)
 
+    # explanation
+    st.markdown(
+        """
+        <details>
+            <summary>Explanation</summary>
+            You have several options to get the optimal locations for your needs:
+            <ul>
+                <li><strong>Number of centers </strong><br>
+                You already know how many centers you want to open? Give this
+                number to our algorithm and you will receive the optimal
+                locations. This is applicable if you have a fixed budget for a
+                certain number of centers and simply want to get the best
+                locations for these.<br>
+                Example: Choose <u>10</u> if you want 10 centers.</li>
+                <li><strong>Mean distance </strong><br>
+                You don't know yet how many centers to open, but distance is
+                the deciding factor? Let us choose the optimal number of
+                centers for you based on the average distance to the country's
+                population.<br>
+                Example: The average person in the country should not have
+                to travel more than 50 km to get to their nearest center.
+                Choose a mean distance of <u>50 km</u> in this case.</li>
+                <li><strong>Radius and Population </strong><br>
+                Each of your centers has an effective area it can cover. For
+                example, you can limit the effective radius of your
+                centers to 50 km. <br>
+                Choose how many people should be inside the coverage area of
+                your centers. Our algorithm will then determine the required
+                number of centers and their optimal locations. You can choose
+                population as a percentage from 0 to 100 % of the country's total.<br>
+                Example: You want 60 % of the country's population to be within
+                50 km of your centers. Choose <u>50 km</u> radius and <u>60 %</u>
+                of the population.</li>
+            </ul>
+        </details>
+        """,
+        unsafe_allow_html=True
+    )
 
     #Select buttons for mean distance/number of clusters
 
