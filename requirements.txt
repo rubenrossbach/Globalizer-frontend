@@ -20,6 +20,8 @@ requests
 gcsfs
 google-cloud-storage
 s3fs
+xlrd
+hydralit_components
 
 # utilities
 six>=1.14
