@@ -27,19 +27,7 @@ def app():
 
         </p>
         """,unsafe_allow_html=True)
-    #st.markdown(
-     #   """
-     #   <h1 style='text-align: center; color: black;'><u>Globalizer</u></h1>
-     #   <p style='text-align: center'>Expanding to a new country and wondering where to open your business's
-     #   locations?</p>
-     #   <p style='text-align: center'>Let us help you with our Machine Learning algorithm based on high-resolution
-     #   population density data.
-     #   It makes optimal decisions based on where a country's population is
-     #   actually located. <br>
-     #   Choose a country to get started.</p>
-     #   """,
-     #   unsafe_allow_html=True
-    #)
+
 
     #Get dropdown list for countries
     def get_country():

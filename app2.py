@@ -5,7 +5,7 @@ def app():
 
 
     st.markdown("""
-        <h1 style='text-align: center; color: black;'>Globalizer</h1>
+        <h1 style='text-align: justify; color: black;'>Globalizer</h1>
 
         """,unsafe_allow_html=True)
     st.markdown("""
