@@ -18,7 +18,7 @@ def show_country_statistics(iso):
                                 'Urban population (% of total population)': 'Urban population (in %)',\
                                 'GDP (current US$)': 'GDP (in US$B)',\
                                 'GNI per capita (constant 2015 US$)': 'GNI per capita (in US$)',\
-                                'Final consumption expenditure (constant 2015 US$)': 'Final consumption expenditure (in US$B)',
+                                'Final consumption expenditure (constant 2015 US$)': 'Final consumption expenditure (in US$B)'
                                 })
         data = data.rename(columns={'2020': ''})
         data.index.name = "Country Feature"
@@ -27,8 +27,14 @@ def show_country_statistics(iso):
         data.loc['GDP (in US$B)',''] = '{0:.2f}'.format(data.loc['GDP (in US$B)','']/1000000000)
         data.loc['GNI per capita (in US$)',''] = '{0:.2f}'.format(data.loc['GNI per capita (in US$)',''])
         data.loc['Final consumption expenditure (in US$B)',''] = '{0:.2f}'.format(data.loc['Final consumption expenditure (in US$B)','']/1000000000)
+        data.loc['CPIA business regulatory environment rating (1=low to 6=high)',''] = '{0:.2f}'.format(data.loc['CPIA business regulatory environment rating (1=low to 6=high)',''])
+        data.loc['Ease of doing business rank (1=most business-friendly regulations)',''] = '{0:.2f}'.format(data.loc['Ease of doing business rank (1=most business-friendly regulations)',''])
         data = data.dropna()
         data = data[data[''] != 'nan']
     except:
         data = pd.DataFrame({"": ["no additional data found"]})
     return data
+
+
+#if __name__=="__main__":
+#    print(show_country_statistics('DEU'))
