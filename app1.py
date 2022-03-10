@@ -183,7 +183,7 @@ def app():
 
     if run_button:
 
-        with st.spinner('The perfect locations are being calculated'):
+        with st.spinner('Calculating optimal locations'):
 
             #get coordinates
             base_url = 'https://globalizer-2chu5w4mva-ey.a.run.app/predict'
@@ -212,6 +212,7 @@ def app():
                 #response1 = response1.json()
                 coordinate = response1.json()["centers"]
 
+        with st.spinner('Generating Map'):
             avg_distance = response1.json()["avg_distance"]
             st.write(f'Number of centers: {len(coordinate)}')
             st.write(f'Average distance to customers: {round(avg_distance, 2)} km')
@@ -332,10 +333,14 @@ def app():
 
             folium_static(m)
 
+            # get additional data
             st.markdown('## Additional Data')
             for c in country_list:
                 st.markdown(f"**{c}**")
-                st.dataframe(show_country_statistics(trans[c]))
+                try:
+                    st.dataframe(show_country_statistics(trans[c]))
+                except:
+                    st.write("No additional data found.")
 
             #Get Address to display on page
             st.write("## Your Centers:")
