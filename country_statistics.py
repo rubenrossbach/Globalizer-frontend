@@ -11,8 +11,7 @@ def show_country_statistics(iso):
         data_ = data.loc[['Population, total', 'Urban population (% of total population)',\
                         'GDP (current US$)','GNI per capita (constant 2015 US$)',\
                         'Final consumption expenditure (constant 2015 US$)',\
-                        'CPIA business regulatory environment rating (1=low to 6=high)',\
-                        'Ease of doing business rank (1=most business-friendly regulations)'],\
+                        'CPIA business regulatory environment rating (1=low to 6=high)'],\
                         ["2020"]]
         business_rank = data.loc[['Ease of doing business rank (1=most business-friendly regulations)'],["2019"]]
         business_rank = business_rank.rename(columns={"2019":"2020"})
@@ -23,7 +22,7 @@ def show_country_statistics(iso):
                                 'GNI per capita (constant 2015 US$)': 'GNI per capita (in US$)',\
                                 'Final consumption expenditure (constant 2015 US$)': 'Final consumption expenditure (in US$B)'
                                 })
-        data = data.rename(columns={'2020': ''})
+        data = data_.rename(columns={'2020': ''})
         data.index.name = "Country Feature"
         data.loc['Population (in Millions)',''] = '{0:.2f}'.format(data.loc['Population (in Millions)',''].astype(float)/1000000)
         data.loc['Urban population (in %)',''] = '{0:.2f}'.format(data.loc['Urban population (in %)',''])
