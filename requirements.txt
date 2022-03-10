@@ -22,7 +22,6 @@ google-cloud-storage
 s3fs
 xlrd
 hydralit_components
-webbrowser
 
 # utilities
 six>=1.14
