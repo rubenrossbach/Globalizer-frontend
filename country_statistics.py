@@ -1,4 +1,5 @@
 import pandas as pd
+import xlrd
 
 def show_country_statistics(iso):
     if iso == "AN":
@@ -38,5 +39,5 @@ def show_country_statistics(iso):
     return data
 
 
-#if __name__=="__main__":
-#    print(show_country_statistics('DEU'))
+if __name__=="__main__":
+    print(show_country_statistics('DEU'))
