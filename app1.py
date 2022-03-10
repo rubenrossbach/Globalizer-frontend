@@ -13,22 +13,19 @@ from country_statistics import show_country_statistics
 
 def app():
 
-    title_container = st.container()
-    col1, col2 = st.columns([1, 1000])
-    image = 'https://freesvg.org/img/1386749018.png'
-    with title_container:
-        with col1:
-            st.image(image, width=45)
-        with col2:
-            st.markdown("""
-        <h1 style='text-align: center; color: black;'>Globalizer</h1>
-        <p style='text-align: center'>Expanding to a new country and wondering where to open your business's
-        locations?</p>
-        <p style='text-align: center'>Let us help you with our Machine Learning algorithm based on high-resolution
-        population density data.
+
+    st.markdown("""
+        <h1 style='text-align: justify; color: black;'>Globalizer</h1>
+        <p style='text-align: justify'>Expanding to a new country and wondering where to open your business's
+        locations? <br> Let us help you with our Machine Learning algorithm based on high-resolution
+        population density data.<br>
         It makes optimal decisions based on where a country's population is
-        actually located. <br>
-        Choose a country to get started.</p>
+        actually located.<br>
+        Choose a country to get started.
+        </p><br>
+        <p>
+
+        </p>
         """,unsafe_allow_html=True)
     #st.markdown(
      #   """
@@ -185,7 +182,7 @@ def app():
         c = st.markdown("""
         <style>
         div.stButton > button:first-child {
-            background-color: #f23a3a;
+            background-color: #3f5ca6;
             color:#ffffff;
         }
         </style>""", unsafe_allow_html=True)

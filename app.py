@@ -14,8 +14,8 @@ iframe {
 }
 img {
     display: block;
-    margin-left: auto;
-    margin-right: auto;
+    margin-left: center;
+    margin-right: center;
     width: 50%;
     border-radius: 50%;
 }
