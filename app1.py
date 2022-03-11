@@ -315,20 +315,21 @@ def app():
 
                 folium_static(m)
 
-            # get additional data
-                st.markdown('## Additional Data')
-                for c in country_list:
-                    st.markdown(f"**{c}**")
-                    try:
-                        st.dataframe(show_country_statistics(trans[c]))
-                    except:
-                        st.write("No additional data found.")
-
             #Get Address to display on page
                 st.write("## Your Centers:")
                 st.dataframe(df)
                 csv = df.to_csv()
                 st.download_button(label = 'Download as CSV file', data = csv, file_name = 'centers.csv')
+
+            # get additional data
+        with st.spinner('Fetching additional statistics'):
+            st.markdown('## Additional Data')
+            for c in country_list:
+                st.markdown(f"**{c}**")
+                try:
+                    st.dataframe(show_country_statistics(trans[c]))
+                except:
+                    st.write("No additional data found.")
 
 
     # no button pressed
