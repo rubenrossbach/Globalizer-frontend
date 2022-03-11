@@ -25,8 +25,8 @@ img {
 st.write(f'<style>{CSS}</style>', unsafe_allow_html=True)
 
 PAGES = {
-"The Project": app1,
-"The Team": app2
+"Home": app1,
+"About Us": app2
 }
 
 st.sidebar.title('Globalizer')
