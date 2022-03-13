@@ -26,7 +26,7 @@ st.write(f'<style>{CSS}</style>', unsafe_allow_html=True)
 
 PAGES = {
 "Home": app1,
-"About Us": app2
+"About": app2
 }
 
 st.sidebar.title('Globalizer')
