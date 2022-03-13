@@ -29,7 +29,7 @@ def app():
     col1, col2, col3, col4, col5, col6, col7, col8, col9= st.columns(9)
     with col5:
         st.image('https://avatars.githubusercontent.com/u/96783837?v=4', width=110)
-    st.markdown("Studied Chemical Engineering (M.Sc.) at TUM. I always liked the computational aspects of my study projects: MATLAB, OpenFOAM, molecular dynamics simulations. Quit my job in the pharmaceutical industry because I wasn't learning anything new anymore. My interest in coding was renewed. I decided to go deeper in this direction with the Data Science bootcamp and learn to build something new using coding and data.")
+    st.markdown("Studied Chemical Engineering (M.Sc.) at TUM. I always liked the computational aspects of my study projects and decided the Data Science bootcamp is right for me. I wanted to unlock the power of data to solve real world problems and learn to build usable products. Managing this project required not just a lot of coding, but also project management and communication. I am looking forward to using these new skills for the next project.")
     col1, col2, col3, col4, col5, col6, col7= st.columns(7)
     with col3:
         urlrLink = "[Ruben's LinkedIn](https://www.linkedin.com/in/ruben-rossbach/)"
